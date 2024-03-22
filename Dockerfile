@@ -4,7 +4,7 @@
 # base notebook, contains Jupyter and relevant tools
 # See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag 
 # for a list of the most current containers we maintain
-ARG BASE_CONTAINER=ghcr.io/ucsd-ets/datascience-notebook:stable
+ARG BASE_CONTAINER=ghcr.io/ucsd-ets/scipy-ml-notebook:stable
 
 FROM $BASE_CONTAINER
 
@@ -15,14 +15,14 @@ USER root
 
 #xarray, netCDF, and dask 
 #RUN apt-get -y install htop
-RUN pip install xarray netCDF4 dask
+# RUN pip install xarray netCDF4 dask
 
 # 3) install packages using notebook user
 USER jovyan
 
-# RUN conda install -y scikit-learn
+RUN mamba install -y xarray netCDF4 dask cartopy
 
-#RUN pip install --no-cache-dir networkx scipy
+RUN pip install --no-cache-dir dask-ml scikeras
 
 # Override command to disable running jupyter notebook at launch
 # CMD ["/bin/bash"]
